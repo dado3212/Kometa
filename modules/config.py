@@ -93,7 +93,7 @@ mass_available_options = {
     "anidb": "Use AniDB Release", "mal": "Use MyAnimeList Release"
 }
 mass_image_options = {
-    "lock": "Lock Image", "unlock": "Unlock Image", "plex": "Use Plex Images", "tmdb": "Use TMDb Images"
+    "lock": "Lock Image", "unlock": "Unlock Image", "plex": "Use Plex Images", "tmdb": "Use TMDb Images", "letterboxd": "Use Letterboxd Images"
 }
 mass_episode_rating_options = {
     "lock": "Lock Rating", "unlock": "Unlock Rating", "remove": "Remove and Lock Rating", "reset": "Remove and Unlock Rating",
@@ -975,7 +975,6 @@ class ConfigFile:
                                     }
                             else:
                                 section_final[op] = check_for_attribute(config_op, op, var_type=data_type, default=False, save=False)
-
                         for k, v in section_final.items():
                             if k not in final_operations:
                                 final_operations[k] = v

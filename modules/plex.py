@@ -1,4 +1,4 @@
-import os, plexapi, re, time
+import os, plexapi, re, time, requests
 from datetime import datetime, timedelta
 from modules import builder, util
 from modules.library import Library
@@ -1278,6 +1278,19 @@ class Plex(Library):
                 if attr == "tmdb" and tmdb:
                     image = tmdb
                     location = "TMDb"
+                elif attr == "letterboxd":
+                    if (isinstance(item, Movie)):
+                        for guid in item.guids:
+                            if 'imdb://' in guid.id:
+                                path = guid.id.replace('imdb://', 'https://letterboxd.com/imdb/')
+                                response = requests.get(path)
+
+                                if response.status_code == 200:
+                                    html_content = response.text
+                                    letterboxd_poster_match = re.search(r"\"image\":\"(.*?)\"", html_content)
+                                    if letterboxd_poster_match is not None:
+                                        image = letterboxd_poster_match.group(1)
+                    
                 if not image:
                     images = item.posters() if poster else item.arts()
                     temp_image = next((p for p in images), None)
